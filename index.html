@@ -2,48 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>sunnicechat.com - Official Website</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sunnicechat.com - WhatsApp Chat</title>
 <style>
-body{margin:0;font-family:Arial;background:#000;color:white;text-align:center}
-.top{background:#25D366;padding:25px}
-.top h1{margin:0;font-size:30px;letter-spacing:1px}
-.top p{margin:5px 0 0;opacity:0.9}
-.domain{background:#111;padding:10px;font-size:14px;color:#25D366;border-bottom:1px solid #222}
-.card{background:#1a1a1a;padding:20px;border-radius:15px;margin:20px auto;max-width:380px;border:1px solid #222}
-.btn{background:#25D366;color:white;padding:12px 25px;border-radius:30px;text-decoration:none;display:inline-block;margin:8px;font-weight:bold}
-h2{color:#25D366}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui;background:#111b21;color:#e9edef;height:100vh}
+.wa{max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;background:#0b141a;position:relative}
+.head{background:#202c33;padding:10px 14px;display:flex;align-items:center;gap:10px;height:60px}
+.head .av{width:40px;height:40px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.chat{background:#0b141a url('https://i.ibb.co/3s4kL5z/whatsapp-bg.png');background-color:#0b141a;flex:1;overflow-y:auto;padding:10px 8px 80px 8px;background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMwYjE0MWEiLz48L3N2Zz4=');}
+.b{max-width:75%;padding:6px 8px 4px 8px;border-radius:8px;margin:3px 8px;font-size:14.2px;line-height:19px;position:relative}
+.b.other{background:#202c33;align-self:flex-start}
+.b.me{background:#005c4b;margin-left:auto}
+.b .t{font-size:11px;color:#8696a0;float:right;margin:6px 0 0 8px}
+.inputbar{position:absolute;bottom:0;left:0;right:0;background:#202c33;padding:6px 10px;display:flex;gap:8px;align-items:center}
+.inputbar .wrap{flex:1;background:#2a3942;border-radius:21px;display:flex;padding:4px 12px;align-items:center}
+.inputbar input{flex:1;background:transparent;border:none;color:#fff;outline:none;padding:8px;font-size:15px}
+.inputbar button{background:#00a884;width:45px;height:45px;border-radius:50%;border:none;color:#fff;font-size:18px}
+.auth{max-width:420px;margin:0 auto;height:100vh;background:#111b21;display:flex;flex-direction:column;justify-content:center;padding:24px}
+.auth h1{text-align:center}
+.auth p{color:#8696a0;text-align:center;margin:8px 0 20px}
+.auth input{width:100%;background:#2a3942;border:none;padding:14px;border-radius:8px;color:#fff;margin:8px 0;font-size:16px}
+.auth button{width:100%;background:#00a884;color:#111b21;border:none;padding:14px;border-radius:24px;font-weight:bold;font-size:16px;margin-top:12px}
+.small{font-size:13px;color:#8696a0;text-align:center;margin-top:16px}
+.small span{color:#53bdeb}
 </style>
 </head>
 <body>
-
-<div class="domain">🌐 sunnicechat.com</div>
-
-<div class="top">
-<h1>SUNNICECHAT.COM 💬</h1>
-<p>Official Chat Website</p>
+<div id="auth" class="auth">
+<h1>sunnicechat.com 💬</h1>
+<p>Real WhatsApp Style - Sign up to chat</p>
+<div id="login"><input id="le" type="email" placeholder="Email"><input id="lp" type="password" placeholder="Password"><button onclick="login()">Login</button><div class="small">No account? <span onclick="showS()">Create account</span></div></div>
+<div id="signup" style="display:none"><input id="sn" placeholder="Your name"><input id="se" type="email" placeholder="Email"><input id="sp" type="password" placeholder="Password (min 6)"><button onclick="signup()">Create Account & Chat 🔥</button><div class="small">Have account? <span onclick="showL()">Login</span></div></div>
+<p style="margin-top:20px;font-size:11px;opacity:.5;text-align:center">Demo mode works instantly. For real multi-phone chat, add Firebase later - I go help you.</p>
 </div>
-
-<div style="padding:10px 20px">
-<div class="card">
-<h2>Welcome!</h2>
-<p>This is the official website of <b>sunnicechat.com</b></p>
-<p>Chat, connect and have fun!</p>
+<div id="app" class="wa" style="display:none">
+<div class="head"><div class="av" id="av">S</div><div style="flex:1"><b>sunnicechat.com Group <span style="color:#00a884">•</span></b><div id="on" style="font-size:13px;color:#8696a0">online</div></div><div>⋮</div></div>
+<div class="chat" id="ch"></div>
+<div class="inputbar"><div class="wrap"><input id="msg" placeholder="Type a message"><span>😊</span></div><button onclick="send()">➤</button></div>
 </div>
-
-<div class="card">
-<h2>📧 Contact</h2>
-<p>Email: sundizzy064a@gmail.com</p>
-<a class="btn" href="mailto:sundizzy064a@gmail.com">Send Email</a>
-</div>
-
-<div class="card">
-<h2>💬 About</h2>
-<p>Na SunniceChat be this - Your No.1 chat place for Lagos!</p>
-</div>
-
-<p style="opacity:0.3;margin-top:40px">sunnicechat.com | Powered by GitHub</p>
-</div>
-
+<script>
+let cur=null,curName=localStorage.getItem('sc_n')||'';let msgs=JSON.parse(localStorage.getItem('sc_m')||'[]');
+window.showS=()=>{login.style.display='none';signup.style.display='block'};window.showL=()=>{signup.style.display='none';login.style.display='block'};
+window.signup=()=>{let n=sn.value.trim(),e=se.value.trim(),p=sp.value.trim();if(!n||!e||p.length<6)return alert('Fill name,email,pass 6+');localStorage.setItem('sc_n',n);curName=n;cur={uid:Date.now()+'',email:e};enter();render();};window.login=()=>{let e=le.value.trim(),p=lp.value.trim();if(!e||!p)return alert('Put email & pass');curName=localStorage.getItem('sc_n')||e.split('@')[0];cur={uid:Date.now()+'',email:e};enter();render();};
+function enter(){auth.style.display='none';app.style.display='flex';av.textContent=curName.charAt(0).toUpperCase();on.textContent=curName+' • online';}
+window.send=()=>{let t=msg.value.trim();if(!t||!cur)return;msg.value='';let tm=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});msgs.push({uid:cur.uid,name:curName,text:t,tm:tm});if(msgs.length>100)msgs.shift();localStorage.setItem('sc_m',JSON.stringify(msgs));render();setTimeout(()=>{if(Math.random()>0.6){let ns=['Amaka','Tunde','Chioma'],tx=['Lol 😂','Sunnice na fire 🔥','How far boss?','You don join!'];let f={uid:'o'+Math.random(),name:ns[Math.floor(Math.random()*ns.length)],text:tx[Math.floor(Math.random()*tx.length)],tm:tm};msgs.push(f);localStorage.setItem('sc_m',JSON.stringify(msgs));render();}},1200);};
+function render(){ch.innerHTML='';msgs.slice(-100).forEach(m=>{let me=m.uid===cur.uid;ch.innerHTML+=`<div class="b ${me?'me':'other'}">${!me?`<b style="color:#53bdeb;font-size:12px">${m.name}</b><br>`:''}${m.text}<span class="t">${m.tm} ${me?'✓✓':''}</span><div style="clear:both"></div></div>`});ch.scrollTop=ch.scrollHeight;}
+msg?.addEventListener('keypress',e=>{if(e.key==='Enter')send()});
+if(curName&&localStorage.getItem('sc_n')){cur={uid:'demo',email:'demo'};enter();render();}
+</script>
 </body>
 </html>
