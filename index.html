@@ -1,131 +1,247 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lagos Life - Legit Danfo</title><style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui;background:#000;color:#fff}
-.danfo{max-width:440px;margin:0 auto;min-height:100vh;background:#0f0f0f;display:flex;flex-direction:column;position:relative}
-.roof{background:repeating-linear-gradient(90deg,#FFD700 0 20px,#000 20px 40px);height:12px}
-.top{background:#111;padding:8px 12px;display:flex;justify-content:space-between;font-size:11px;color:#FFD700;font-weight:900;border-bottom:2px solid #FFD700}
-.auth{flex:1;padding:18px;overflow-y:auto;background:#000}
-.card{background:#151515;border:2px solid #FFD700;border-radius:14px;padding:14px;margin:10px 0}
-.card input,.card select{width:100%;background:#000;border:1px solid #333;padding:11px;border-radius:10px;color:#fff;margin:5px 0}
-.btn{width:100%;background:#FFD700;color:#000;border:none;padding:12px;border-radius:30px;font-weight:900;margin-top:8px}
-.bubble{max-width:78%;padding:8px 11px;border-radius:16px;margin:5px 8px;font-size:13.5px;border:1px solid #222}
-.bubble.other{background:#1e1e1e}.bubble.me{background:#FFD700;color:#000;margin-left:auto}
-.view{flex:1;overflow-y:auto;padding-bottom:90px}
-.pass{display:flex;gap:10px;padding:10px;border-bottom:1px solid #151515;align-items:center}
-.av{width:44px;height:44px;background:#FFD700;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden}
-.av img{width:100%;height:100%;object-fit:cover}
-.tabs{display:flex;background:#000;border-top:2px solid #FFD700}
-.tabs button{flex:1;background:transparent;border:none;color:#666;padding:10px;font-size:10px;font-weight:900}
-.tabs button.on{color:#FFD700;background:#111}
-.inputbar{position:absolute;bottom:44px;left:0;right:0;background:#111;padding:6px 8px;display:flex;gap:6px;border-top:1px solid #222}
-.wrap{flex:1;background:#000;border-radius:24px;display:flex;padding:3px 10px;border:1px solid #333}
-.wrap input{flex:1;background:transparent;border:none;color:#fff;outline:none;padding:8px}
-.send{background:#FFD700;width:42px;height:42px;border-radius:50%;border:none;font-weight:900}
-.invite{background:#000;border:2px dashed #FFD700;padding:12px;border-radius:12px;text-align:center;margin:10px}
-</style>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-</head><body>
-<div class="danfo">
-<div class="roof"></div>
-<div class="top"><span>🚌 CMS → OSHODI • <span id="online">1</span> for danfo</span><span id="clock">9:41</span><span>₦<span id="bal">1500</span></span></div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lagos Love - Real People Only</title><style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#FFF8E1;color:#222}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:#FFFDE7;display:flex;flex-direction:column;position:relative;box-shadow:0 0 20px rgba(0,0,0,.1)}
+.top{background:#FFFFFF;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #FFE082;position:sticky;top:0;z-index:10}
+.top b{font-size:20px;color:#2E7D32;font-weight:900}.top span{font-size:12px;color:#888}
+.auth{flex:1;padding:20px;background:#FFF8E1;display:flex;flex-direction:column;justify-content:center;overflow-y:auto}
+.card{background:#FFFFFF;border:1.5px solid #FFECB3;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 2px 10px rgba(255,193,7,.15)}
+.card input,.card select,.card textarea{width:100%;background:#FFFDE7;border:1.5px solid #FFECB3;padding:12px;border-radius:12px;color:#333;margin:5px 0;font-size:14px;outline:none}
+.card input:focus{border-color:#FFD54F}
+.btn{width:100%;background:#2E7D32;color:#fff;border:none;padding:13px;border-radius:30px;font-weight:900;margin-top:8px;font-size:14px;letter-spacing:.3px}
+.btn-yellow{background:#FFD54F;color:#2E7D32;border:2px solid #FFCA28}
+.view{flex:1;overflow-y:auto;padding-bottom:85px;background:#FFF8E1}
+.userCard{background:#fff;border-radius:20px;margin:12px;padding:0;overflow:hidden;border:1px solid #FFECB3;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.userCard img{width:100%;height:280px;object-fit:cover;background:#FFF8E1}
+.userInfo{padding:12px 14px}
+.userInfo h3{font-size:18px;color:#222}.userInfo p{font-size:12px;color:#666;margin:3px 0}
+.badge{display:inline-block;background:#FFF8E1;border:1px solid #FFECB3;padding:4px 9px;border-radius:20px;font-size:10px;margin:2px;color:#795548}
+.bottomNav{position:absolute;bottom:0;left:0;right:0;background:#2E7D32;display:flex;padding:6px 0 8px;border-top:1px solid #1B5E20;z-index:20}
+.bottomNav button{flex:1;background:transparent;border:none;color:rgba(255,255,255,.6);padding:6px;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottomNav button.on{color:#FFEB3B}.bottomNav button i{font-size:20px;font-style:normal}
+.chatList{display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid #FFF3C4;align-items:center;background:#fff;margin:6px 10px;border-radius:14px;border:1px solid #FFECB3}
+.chatList .av{width:52px;height:52px;border-radius:50%;background:#FFF8E1;border:2px solid #FFD54F;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;overflow:hidden;color:#2E7D32}
+.chatList .av img{width:100%;height:100%;object-fit:cover}
+.chatBox{background:#FFF8E1;flex:1;overflow-y:auto;padding:12px 8px;padding-bottom:20px}
+.bubbleWrap{display:flex;flex-direction:column;margin:6px 0}
+.bubble{max-width:76%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.35;box-shadow:0 1px 2px rgba(0,0,0,.08);position:relative}
+.bubble.me{align-self:flex-end;background:#2E7D32;color:#fff;border-bottom-right-radius:6px}
+.bubble.other{align-self:flex-start;background:#FFFFFF;color:#222;border:1px solid #FFECB3;border-bottom-left-radius:6px}
+.bubble .time{font-size:9px;opacity:.6;margin-top:4px;text-align:right}
+.bubble img{width:100%;border-radius:10px;margin-top:6px;max-height:200px;object-fit:cover}
+.inputbar{position:absolute;bottom:58px;left:0;right:0;background:#FFFFFF;padding:8px 10px;display:flex;gap:8px;align-items:center;border-top:1px solid #FFECB3}
+.wrap{flex:1;background:#FFF8E1;border-radius:28px;display:flex;align-items:center;padding:4px 6px 4px 14px;border:1.5px solid #FFECB3}
+.wrap input{flex:1;background:transparent;border:none;outline:none;padding:8px;font-size:14px;color:#333}
+.iconBtn{width:36px;height:36px;border-radius:50%;border:none;background:#fff;border:1px solid #FFECB3;display:flex;align-items:center;justify-content:center;font-size:16px}
+.sendBtn{width:44px;height:44px;border-radius:50%;border:none;background:#2E7D32;color:#fff;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.profileHead{background:#fff;padding:20px;text-align:center;border-bottom:1px solid #FFECB3}
+.profilePic{width:96px;height:96px;border-radius:50%;margin:0 auto;background:#FFF8E1;border:3px solid #FFD54F;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;overflow:hidden;color:#2E7D32}
+.profilePic img{width:100%;height:100%;object-fit:cover}
+.dot{width:10px;height:10px;background:#4CAF50;border-radius:50%;display:inline-block;margin-right:4px;border:2px solid #fff;box-shadow:0 0 0 1px #4CAF50}
+</style></head><body>
+<div class="app">
+<div class="top"><b>💛 Lagos Love</b><span id="topInfo">Real People Only</span></div>
 
 <div id="auth">
-<h1 style="text-align:center;font-size:28px">REAL<br><span style="background:#FFD700;color:#000;padding:0 8px">LAGOS LIFE</span></h1>
-<p style="text-align:center;color:#777;font-size:11px;margin:6px 0">Legit Danfo • Add Real People • No Form!</p>
-<div class="card">
-<input id="sn" placeholder="Street name">
-<select id="area"><option>Lekki</option><option>Ikeja</option><option>Yaba</option><option>Oshodi</option><option>Ajegunle</option><option>Mushin</option></select>
+<div style="text-align:center;margin-bottom:10px"><h1 style="font-size:28px;color:#2E7D32">Find Love<br><span style="background:#FFD54F;padding:0 8px;border-radius:8px">For Lagos</span></h1><p style="color:#795548;font-size:12px;margin-top:6px">Lite Yellow • White Top • Green Down • No Robot!</p></div>
+
+<div id="loginBox" class="card">
+<b style="font-size:13px;color:#2E7D32">LOGIN</b>
+<input id="le" placeholder="Email">
+<input id="lp" type="password" placeholder="Password">
+<button class="btn" onclick="login()">LOGIN 💛</button>
+<p style="text-align:center;font-size:12px;margin-top:10px;color:#666">No account? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showSignup()">Sign up</span></p>
+</div>
+
+<div id="signupBox" class="card" style="display:none">
+<b style="font-size:13px;color:#2E7D32">CREATE YOUR REAL ACCOUNT</b>
+<input id="sn" placeholder="Full name - e.g Sunnice">
+<input id="sage" type="number" placeholder="Age - e.g 23">
+<select id="sgender"><option value="">Gender</option><option>Man</option><option>Woman</option></select>
+<select id="sarea"><option>Lekki</option><option>Ikeja</option><option>Yaba</option><option>Surulere</option><option>VI</option><option>Ajah</option><option>Oshodi</option><option>Ikorodu</option><option>Computer Village</option></select>
+<textarea id="sbio" rows="2" placeholder="Bio - e.g I be fine boy from Ikeja..."></textarea>
+<input type="file" id="sfile" accept="image/*">
 <input id="se" placeholder="Email">
 <input id="sp" type="password" placeholder="Password">
-<button class="btn" onclick="join()">JOIN DANFO - OWA! 🚕</button>
+<button class="btn" onclick="signup()">SIGN UP & FIND LOVE 💚</button>
+<p style="text-align:center;font-size:12px;margin-top:10px;color:#666">Already have? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showLogin()">Login</span></p>
 </div>
-<div class="invite"><b>🔗 ADD REAL PEOPLE?</b><p style="font-size:11px;color:#888;margin:6px 0">After you join, share your link make friends join same danfo from their phone!</p></div>
-</div>
-
-<div id="app" style="display:none;flex:1;flex-direction:column;position:relative;height:100vh">
-<div style="background:#000;padding:8px 10px;display:flex;gap:6px;border-bottom:1px solid #222">
-<button onclick="addPeople()" style="flex:1;background:#FFD700;color:#000;border:none;padding:8px;border-radius:20px;font-weight:900;font-size:11px">+ ADD PEOPLE 🔗</button>
-<button onclick="shareDanfo()" style="flex:1;background:#222;color:#FFD700;border:1px solid #FFD700;padding:8px;border-radius:20px;font-weight:900;font-size:11px">SHARE DANFO LINK</button>
+<p style="text-align:center;color:#BCAAA4;font-size:10px;margin-top:8px">Anonymous builder - Nobody know na you build am 🕶️</p>
 </div>
 
-<div id="vChat" class="view"><div id="ch"></div></div>
-<div id="vFriends" class="view" style="display:none"><div id="flist"></div><div class="invite"><p style="font-size:11px">Invite link:</p><p id="inviteLink" style="font-size:10px;color:#FFD700;word-break:break-all"></p><button class="btn" onclick="copyLink()" style="padding:8px;font-size:11px">COPY LINK</button></div></div>
+<div id="main" style="display:none;flex:1;flex-direction:column;height:100%;position:relative">
+<div id="vDiscover" class="view"><div id="discoverList"></div></div>
+<div id="vChats" class="view" style="display:none"><div id="chatList"></div></div>
+<div id="vChatBox" class="view" style="display:none;flex-direction:column;height:100%"><div style="background:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #FFECB3"><button onclick="backToChats()" style="background:transparent;border:none;font-size:18px">←</button><div class="av" id="chatAv" style="width:36px;height:36px;border-radius:50%;background:#FFF8E1;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden"></div><div><b id="chatName" style="font-size:14px"></b><div style="font-size:10px;color:#4CAF50"><span class="dot"></span>Online now</div></div></div><div class="chatBox" id="ch"></div><div class="inputbar"><button class="iconBtn" onclick="document.getElementById('file').click()">📷</button><div class="wrap"><input id="msg" placeholder="Message..."><button class="iconBtn" style="border:none;background:transparent" onclick="document.getElementById('file').click()">😊</button></div><button class="sendBtn" onclick="sendMsg()">➤</button><input type="file" id="file" accept="image/*" style="display:none" onchange="sendPic(this)"></div></div>
 <div id="vProfile" class="view" style="display:none"><div id="myProfile"></div></div>
 
-<div class="inputbar">
-<div class="wrap"><input id="msg" placeholder="How far? Yarn..."><button onclick="document.getElementById('file').click()" style="background:transparent;border:none">📷</button></div>
-<button class="send" onclick="send()">➤</button>
-<input type="file" id="file" accept="image/*" style="display:none" onchange="sendPic(this)">
-</div>
-<div class="tabs">
-<button id="tChat" class="on" onclick="tab('chat')">DANFO CHAT</button>
-<button id="tFriends" onclick="tab('friends')">PASSENGERS (<span id="pCount">1</span>)</button>
-<button id="tProfile" onclick="tab('profile')">MY PROFILE</button>
+<div class="bottomNav">
+<button id="bDiscover" class="on" onclick="tab('discover')"><i>💛</i>DISCOVER</button>
+<button id="bChats" onclick="tab('chats')"><i>💬</i>CHATS</button>
+<button id="bProfile" onclick="tab('profile')"><i>👤</i>PROFILE</button>
 </div>
 </div>
 </div>
 
 <script>
-// === PUT YOUR FIREBASE CONFIG HERE AFTER YOU CREATE ===
-const firebaseConfig = {
-  apiKey: "REPLACE",
-  authDomain: "lagos-life-xxx.firebaseapp.com",
-  databaseURL: "https://lagos-life-xxx-default-rtdb.firebaseio.com",
-  projectId: "lagos-life-xxx",
-  appId: "1:xxx"
+let users=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');
+let msgs=JSON.parse(localStorage.getItem('lagos_real_msgs')||'[]');
+let cur=JSON.parse(localStorage.getItem('lagos_cur')||'null');
+
+function showSignup(){loginBox.style.display='none';signupBox.style.display='block';}
+function showLogin(){signupBox.style.display='none';loginBox.style.display='block';}
+
+function signup(){
+let name=sn.value.trim(),age=sage.value,gender=sgender.value,area=sarea.value,bio=sbio.value.trim(),email=se.value.trim().toLowerCase(),pass=sp.value.trim();
+if(!name||!email||!pass||!age)return alert('Fill name, age, email, password!');
+if(users.find(u=>u.email===email))return alert('Email don exist! Login');
+let file=document.getElementById('sfile').files[0];
+let finish=(pic)=>{
+let user={id:Date.now().toString(),name:name,age:age,gender:gender,area:area,bio:bio,email:email,pass:pass,pic:pic||'',joined:Date.now()};
+users.push(user);localStorage.setItem('lagos_real_users',JSON.stringify(users));
+cur=user;localStorage.setItem('lagos_cur',JSON.stringify(cur));
+startApp();
 };
-// If you no put config yet, e go use local mode (you alone)
-// After you put config, real people go fit join!
-
-let useFirebase = false;
-try{ if(firebaseConfig.apiKey!=="REPLACE"){firebase.initializeApp(firebaseConfig);useFirebase=true;} }catch(e){}
-
-let curName='',curArea='',prof={},msgs=[],users={},myId='user_'+Date.now();
-let balance=1500;
-let danfoId = new URLSearchParams(location.search).get('danfo') || 'main-danfo-cms-oshodi';
-
-function join(){
-let n=sn.value.trim(),a=area.value;if(!n)return alert('Put name');curName=n;curArea=a;prof={name:n,area:a,id:myId,joined:Date.now()};
-localStorage.setItem('lagos_real',JSON.stringify(prof));
-auth.style.display='none';app.style.display='flex';
-if(useFirebase){
-firebase.database().ref('danfos/'+danfoId+'/users/'+myId).set(prof);
-firebase.database().ref('danfos/'+danfoId+'/users/'+myId).onDisconnect().remove();
-firebase.database().ref('danfos/'+danfoId+'/messages').limitToLast(100).on('child_added',snap=>{
-let m=snap.val();msgs.push(m);renderChat();
-});
-firebase.database().ref('danfos/'+danfoId+'/users').on('value',snap=>{
-users=snap.val()||{};document.getElementById('online').textContent=Object.keys(users).length;
-document.getElementById('pCount').textContent=Object.keys(users).length;
-renderFriends();
-});
-}else{
-msgs=[{name:'CONDUCTOR',text:'Owa owa! You enter danfo! To add REAL people, you need Firebase config - check code comment!',sys:true}];
-renderChat();renderFriends();
+if(file){let r=new FileReader();r.onload=e=>finish(e.target.result);r.readAsDataURL(file);}else finish('');
 }
-renderProfile();
-updateInvite();
+function login(){
+let email=le.value.trim().toLowerCase(),pass=lp.value.trim();
+let u=users.find(x=>x.email===email && x.pass===pass);
+if(!u)return alert('Wrong email or password!');
+cur=u;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();
 }
-function send(){
-let t=msg.value.trim();if(!t)return;msg.value='';
-let m={name:curName,area:curArea,text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),id:myId};
-if(useFirebase){firebase.database().ref('danfos/'+danfoId+'/messages').push(m);}else{msgs.push(m);renderChat();}
+function startApp(){
+auth.style.display='none';main.style.display='flex';
+topInfo.textContent=cur.name+' • '+cur.area;
+renderDiscover();renderChatList();renderMyProfile();
+}
+function tab(t){
+['discover','chats','chatBox','profile'].forEach(x=>{let el=document.getElementById('v'+x[0].toUpperCase()+x.slice(1));if(el)el.style.display='none';let b=document.getElementById('b'+x[0].toUpperCase()+x.slice(1));if(b)b.classList.remove('on');});
+if(t==='discover')document.getElementById('vDiscover').style.display='block';
+if(t==='chats')document.getElementById('vChats').style.display='block';
+if(t==='chatBox'){document.getElementById('vChatBox').style.display='flex';document.getElementById('vChatBox').style.flexDirection='column';}
+if(t==='profile')document.getElementById('vProfile').style.display='block';
+let btn=document.getElementById('b'+t[0].toUpperCase()+t.slice(1));if(btn)btn.classList.add('on');
+}
+
+function renderDiscover(){
+let others=users.filter(u=>u.id!==cur.id);
+if(others.length===0){discoverList.innerHTML='<div style="text-align:center;padding:40px 20px"><h3 style="color:#2E7D32">No people yet! 😭</h3><p style="font-size:12px;color:#795548;margin-top:8px">Invite friends make dem sign up! Na real people wey sign up go show here - No robot!</p><div style="margin-top:14px;background:#fff;padding:12px;border-radius:14px;border:1px solid #FFECB3"><p style="font-size:11px;color:#888">Share this link:</p><p style="font-size:11px;color:#2E7D32;word-break:break-all">'+location.href+'</p><button class="btn" style="padding:8px;margin-top:8px" onclick="navigator.clipboard.writeText(location.href);alert(\'Link copied! Send for WhatsApp make friends sign up!\')">COPY LINK 🔗</button></div></div>';return;}
+discoverList.innerHTML=others.map(u=>`
+<div class="userCard">
+<img src="${u.pic||'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400'}" onerror="this.src='https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400'">
+<div class="userInfo">
+<h3>${u.name}, ${u.age} <span style="color:#4CAF50;font-size:12px">● Online</span></h3>
+<p>📍 ${u.area} • ${u.gender||''} • Joined now</p>
+<p style="margin-top:6px;color:#444">${u.bio||'No bio yet'}</p>
+<div style="margin-top:8px"><span class="badge">💛 Real</span><span class="badge">📍 ${u.area}</span><span class="badge">✅ Verified by signup</span></div>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn-yellow btn" style="flex:1;padding:10px" onclick="startChat('${u.id}')">💬 Message ${u.name.split(' ')[0]}</button>
+<button class="btn" style="flex:0.4;padding:10px" onclick="viewProfile('${u.id}')">👀 View</button>
+</div>
+</div>
+</div>
+`).join('');
+}
+
+let currentChatId=null;
+function startChat(uid){
+let u=users.find(x=>x.id===uid);if(!u)return;
+currentChatId=uid;
+document.getElementById('chatName').textContent=u.name;
+document.getElementById('chatAv').innerHTML=u.pic?`<img src="${u.pic}" style="width:100%;height:100%;object-fit:cover">`:u.name.charAt(0);
+tab('chatBox');renderMessages();
+}
+function viewProfile(uid){startChat(uid);}
+
+function renderChatList(){
+let others=users.filter(u=>u.id!==cur.id);
+let lastMsgs={};
+msgs.forEach(m=>{
+if(m.from===cur.id || m.to===cur.id){
+let otherId=m.from===cur.id?m.to:m.from;
+lastMsgs[otherId]=m;
+}
+});
+if(others.length===0){chatList.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:12px">No chats yet. Go Discover and message someone real!</p>';return;}
+chatList.innerHTML=others.map(u=>{
+let last=lastMsgs[u.id];
+return `<div class="chatList" onclick="startChat('${u.id}')">
+<div class="av">${u.pic?`<img src="${u.pic}">`:u.name.charAt(0)}</div>
+<div style="flex:1"><b style="font-size:14px">${u.name}</b><div style="font-size:12px;color:#888">${last? (last.text||'📷 Photo') : 'Say Hi! Start chat - No robot'} • ${last? last.time : ''}</div></div>
+<div style="width:8px;height:8px;background:#4CAF50;border-radius:50%"></div>
+</div>`;
+}).join('');
+}
+function backToChats(){tab('chats');renderChatList();}
+
+function renderMessages(){
+if(!currentChatId)return;
+let conv=msgs.filter(m=>(m.from===cur.id && m.to===currentChatId) || (m.from===currentChatId && m.to===cur.id));
+let h='';
+conv.forEach(m=>{
+let me=m.from===cur.id;
+let pic=m.pic?`<img src="${m.pic}">`:'';
+h+=`<div class="bubbleWrap"><div class="bubble ${me?'me':'other'}">${m.text?m.text:''}${pic}<div class="time">${m.time||''} ${me?'✓✓':''}</div></div></div>`;
+});
+document.getElementById('ch').innerHTML=h||'<p style="text-align:center;color:#BCAAA4;font-size:11px;margin-top:20px">No messages yet. Say Hi! 💛<br>Real chat - No robot</p>';
+document.getElementById('ch').scrollTop=99999;
+}
+function sendMsg(){
+let t=msg.value.trim();if(!t||!currentChatId)return;
+msg.value='';
+let m={from:cur.id,to:currentChatId,text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now()};
+msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));
+renderMessages();renderChatList();
 }
 function sendPic(i){
-let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{
-let m={name:curName,area:curArea,text:'📷 See Lagos!',pic:e.target.result,time:'now',id:myId};
-if(useFirebase)firebase.database().ref('danfos/'+danfoId+'/messages').push(m);else{msgs.push(m);renderChat();}
+let f=i.files[0];if(!f||!currentChatId)return;
+let r=new FileReader();r.onload=e=>{
+let m={from:cur.id,to:currentChatId,text:'',pic:e.target.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now()};
+msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));renderMessages();renderChatList();
 };r.readAsDataURL(f);
 }
-function tab(t){['chat','friends','profile'].forEach(x=>{document.getElementById('v'+x[0].toUpperCase()+x.slice(1)).style.display='none';document.getElementById('t'+x[0].toUpperCase()+x.slice(1)).classList.remove('on');});document.getElementById('v'+t[0].toUpperCase()+t.slice(1)).style.display='block';document.getElementById('t'+t[0].toUpperCase()+t.slice(1)).classList.add('on');}
-function renderChat(){let h='';(msgs.slice(-100)).forEach(m=>{if(m.sys){h+=`<div style="text-align:center;margin:6px"><span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:900">${m.text}</span></div>`;return;}let me=m.id===myId;let pic=m.pic?`<br><img src="${m.pic}" style="width:100%;border-radius:10px;max-height:180px;object-fit:cover;margin-top:5px">`:'';h+=`<div class="bubble ${me?'me':'other'}"><b style="font-size:9px;opacity:.6">${m.name} - ${m.area||''}</b><br>${m.text}${pic}<div style="font-size:9px;opacity:.5;text-align:right">${m.time||''}</div></div>`});document.getElementById('ch').innerHTML=h;document.getElementById('ch').scrollTop=99999;}
-function renderFriends(){let list=Object.values(users);if(!useFirebase)list=[prof];document.getElementById('flist').innerHTML=list.map(u=>`<div class="pass"><div class="av">${u.name?.charAt(0)||'L'}</div><div style="flex:1"><b>${u.name}</b> <span style="background:#FFD700;color:#000;font-size:9px;padding:1px 5px;border-radius:10px">${u.area||''}</span><div style="font-size:11px;color:#888">Inside danfo now</div></div><div style="width:8px;height:8px;background:#0f0;border-radius:50%"></div></div>`).join('');}
-function renderProfile(){let p=prof;document.getElementById('myProfile').innerHTML=`<div class="card" style="text-align:center"><div class="av" style="width:70px;height:70px;margin:0 auto;font-size:28px">${p.name?.charAt(0)||'L'}</div><h3>${p.name}</h3><p style="color:#FFD700;font-size:12px">${p.area} • ₦${balance}</p></div><div class="card"><b style="font-size:11px;color:#FFD700">SHARE DANFO</b><p style="font-size:11px;color:#888">Send this link to friends make dem join your danfo:</p><p id="link2" style="font-size:10px;color:#FFD700;word-break:break-all;margin:6px 0"></p><button class="btn" onclick="copyLink()">COPY INVITE LINK 🔗</button></div>`;updateInvite();}
-function updateInvite(){let link=location.origin+location.pathname+'?danfo='+danfoId;let el=document.getElementById('inviteLink');if(el)el.textContent=link;let el2=document.getElementById('link2');if(el2)el2.textContent=link;}
-function addPeople(){tab('friends');updateInvite();alert('Share your danfo link to add people! Anyone with link go enter same danfo!');}
-function shareDanfo(){let link=location.origin+location.pathname+'?danfo='+danfoId;if(navigator.share){navigator.share({title:'Join my Lagos Danfo!',url:link});}else{copyLink();}}
-function copyLink(){let link=location.origin+location.pathname+'?danfo='+danfoId;navigator.clipboard.writeText(link);alert('Link copied! Send am for WhatsApp make friends join! 🚌 Link: '+link);}
-msg?.addEventListener('keypress',e=>{if(e.key==='Enter')send()});
-setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})},1000);
-let saved=localStorage.getItem('lagos_real');if(saved){prof=JSON.parse(saved);sn.value=prof.name;area.value=prof.area;}
+function renderMyProfile(){
+document.getElementById('myProfile').innerHTML=`
+<div class="profileHead">
+<div class="profilePic">${cur.pic?`<img src="${cur.pic}">`:cur.name.charAt(0)}</div>
+<h2 style="margin-top:10px;color:#222">${cur.name}, ${cur.age}</h2>
+<p style="color:#2E7D32;font-size:12px">📍 ${cur.area} • ${cur.gender} • <span style="color:#4CAF50">● Online</span></p>
+<p style="font-size:12px;color:#666;margin-top:6px">${cur.bio||''}</p>
+<p style="font-size:11px;color:#BCAAA4;margin-top:6px">${cur.email}</p>
+</div>
+<div style="padding:14px">
+<div class="card">
+<b style="font-size:12px;color:#2E7D32">EDIT PROFILE</b>
+<input id="en" value="${cur.name}" placeholder="Name">
+<input id="eage" type="number" value="${cur.age}" placeholder="Age">
+<select id="earea"><option ${cur.area==='Lekki'?'selected':''}>Lekki</option><option ${cur.area==='Ikeja'?'selected':''}>Ikeja</option><option ${cur.area==='Yaba'?'selected':''}>Yaba</option><option ${cur.area==='Surulere'?'selected':''}>Surulere</option><option ${cur.area==='VI'?'selected':''}>VI</option><option ${cur.area==='Ajah'?'selected':''}>Ajah</option><option ${cur.area==='Oshodi'?'selected':''}>Oshodi</option></select>
+<textarea id="ebio" rows="2" placeholder="Bio">${cur.bio||''}</textarea>
+<input type="file" id="efile" accept="image/*" onchange="updatePic(this)">
+<button class="btn" onclick="saveProfile()">SAVE PROFILE 💚</button>
+</div>
+<div class="card" style="border:2px dashed #FFD54F;text-align:center">
+<b style="color:#2E7D32;font-size:12px">ADD MORE PEOPLE - REAL ONLY</b>
+<p style="font-size:11px;color:#795548;margin:6px 0">Share link make friends sign up. Na only people wey sign up go show for Discover!</p>
+<p style="font-size:10px;color:#2E7D32;word-break:break-all;background:#FFF8E1;padding:6px;border-radius:8px">${location.href}</p>
+<button class="btn-yellow btn" onclick="navigator.clipboard.writeText(location.href);alert('Link copied! Send for WhatsApp!')">COPY LINK 🔗</button>
+<p style="font-size:10px;color:#999;margin-top:8px">Total Real Users: ${users.length} • No Robot 🚫🤖</p>
+</div>
+<button class="btn" style="background:#fff;color:#C62828;border:1.5px solid #FFCDD2" onclick="logout()">LOGOUT</button>
+</div>
+`;
+}
+function updatePic(i){let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{cur.pic=e.target.result;document.querySelector('.profilePic').innerHTML=`<img src="${cur.pic}">`;};r.readAsDataURL(f);}
+function saveProfile(){
+cur.name=document.getElementById('en').value.trim()||cur.name;
+cur.age=document.getElementById('eage').value||cur.age;
+cur.area=document.getElementById('earea').value||cur.area;
+cur.bio=document.getElementById('ebio').value.trim()||cur.bio;
+let idx=users.findIndex(u=>u.id===cur.id);if(idx>=0)users[idx]=cur;
+localStorage.setItem('lagos_real_users',JSON.stringify(users));
+localStorage.setItem('lagos_cur',JSON.stringify(cur));
+alert('Profile saved! 💚');renderMyProfile();renderDiscover();topInfo.textContent=cur.name+' • '+cur.area;
+}
+function logout(){if(confirm('Logout?')){localStorage.removeItem('lagos_cur');location.reload();}}
+document.getElementById('msg')?.addEventListener('keypress',e=>{if(e.key==='Enter')sendMsg()});
+if(cur){auth.style.display='none';main.style.display='flex';topInfo.textContent=cur.name+' • '+cur.area;renderDiscover();renderChatList();renderMyProfile();}
 </script></body></html>
