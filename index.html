@@ -1,91 +1,110 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lagos Love - Real People Only</title><style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#FFF8E1;color:#222}
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lagos Love - Edit Profile</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui;background:#FFF8E1;color:#222}
 .app{max-width:430px;margin:0 auto;min-height:100vh;background:#FFFDE7;display:flex;flex-direction:column;position:relative;box-shadow:0 0 20px rgba(0,0,0,.1)}
-.top{background:#FFFFFF;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #FFE082;position:sticky;top:0;z-index:10}
-.top b{font-size:20px;color:#2E7D32;font-weight:900}.top span{font-size:12px;color:#888}
-.auth{flex:1;padding:20px;background:#FFF8E1;display:flex;flex-direction:column;justify-content:center;overflow-y:auto}
-.card{background:#FFFFFF;border:1.5px solid #FFECB3;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 2px 10px rgba(255,193,7,.15)}
-.card input,.card select,.card textarea{width:100%;background:#FFFDE7;border:1.5px solid #FFECB3;padding:12px;border-radius:12px;color:#333;margin:5px 0;font-size:14px;outline:none}
-.card input:focus{border-color:#FFD54F}
-.btn{width:100%;background:#2E7D32;color:#fff;border:none;padding:13px;border-radius:30px;font-weight:900;margin-top:8px;font-size:14px;letter-spacing:.3px}
+.top{background:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #FFD54F;position:sticky;top:0;z-index:10}
+.top b{font-size:19px;color:#2E7D32}
+.auth{flex:1;padding:18px;background:#FFF8E1;overflow-y:auto}
+.card{background:#fff;border:1.5px solid #FFECB3;border-radius:18px;padding:14px;margin:8px 0}
+.card input,.card select,.card textarea{width:100%;background:#FFFDE7;border:1.5px solid #FFECB3;padding:11px;border-radius:12px;color:#333;margin:4px 0;font-size:14px;outline:none}
+.btn{width:100%;background:#2E7D32;color:#fff;border:none;padding:12px;border-radius:30px;font-weight:900;margin-top:6px}
 .btn-yellow{background:#FFD54F;color:#2E7D32;border:2px solid #FFCA28}
 .view{flex:1;overflow-y:auto;padding-bottom:85px;background:#FFF8E1}
-.userCard{background:#fff;border-radius:20px;margin:12px;padding:0;overflow:hidden;border:1px solid #FFECB3;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.userCard img{width:100%;height:280px;object-fit:cover;background:#FFF8E1}
-.userInfo{padding:12px 14px}
-.userInfo h3{font-size:18px;color:#222}.userInfo p{font-size:12px;color:#666;margin:3px 0}
-.badge{display:inline-block;background:#FFF8E1;border:1px solid #FFECB3;padding:4px 9px;border-radius:20px;font-size:10px;margin:2px;color:#795548}
-.bottomNav{position:absolute;bottom:0;left:0;right:0;background:#2E7D32;display:flex;padding:6px 0 8px;border-top:1px solid #1B5E20;z-index:20}
-.bottomNav button{flex:1;background:transparent;border:none;color:rgba(255,255,255,.6);padding:6px;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:2px}
-.bottomNav button.on{color:#FFEB3B}.bottomNav button i{font-size:20px;font-style:normal}
-.chatList{display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid #FFF3C4;align-items:center;background:#fff;margin:6px 10px;border-radius:14px;border:1px solid #FFECB3}
-.chatList .av{width:52px;height:52px;border-radius:50%;background:#FFF8E1;border:2px solid #FFD54F;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;overflow:hidden;color:#2E7D32}
-.chatList .av img{width:100%;height:100%;object-fit:cover}
-.chatBox{background:#FFF8E1;flex:1;overflow-y:auto;padding:12px 8px;padding-bottom:20px}
-.bubbleWrap{display:flex;flex-direction:column;margin:6px 0}
-.bubble{max-width:76%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.35;box-shadow:0 1px 2px rgba(0,0,0,.08);position:relative}
-.bubble.me{align-self:flex-end;background:#2E7D32;color:#fff;border-bottom-right-radius:6px}
-.bubble.other{align-self:flex-start;background:#FFFFFF;color:#222;border:1px solid #FFECB3;border-bottom-left-radius:6px}
-.bubble .time{font-size:9px;opacity:.6;margin-top:4px;text-align:right}
-.bubble img{width:100%;border-radius:10px;margin-top:6px;max-height:200px;object-fit:cover}
-.inputbar{position:absolute;bottom:58px;left:0;right:0;background:#FFFFFF;padding:8px 10px;display:flex;gap:8px;align-items:center;border-top:1px solid #FFECB3}
-.wrap{flex:1;background:#FFF8E1;border-radius:28px;display:flex;align-items:center;padding:4px 6px 4px 14px;border:1.5px solid #FFECB3}
-.wrap input{flex:1;background:transparent;border:none;outline:none;padding:8px;font-size:14px;color:#333}
-.iconBtn{width:36px;height:36px;border-radius:50%;border:none;background:#fff;border:1px solid #FFECB3;display:flex;align-items:center;justify-content:center;font-size:16px}
-.sendBtn{width:44px;height:44px;border-radius:50%;border:none;background:#2E7D32;color:#fff;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center}
-.profileHead{background:#fff;padding:20px;text-align:center;border-bottom:1px solid #FFECB3}
-.profilePic{width:96px;height:96px;border-radius:50%;margin:0 auto;background:#FFF8E1;border:3px solid #FFD54F;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;overflow:hidden;color:#2E7D32}
-.profilePic img{width:100%;height:100%;object-fit:cover}
-.dot{width:10px;height:10px;background:#4CAF50;border-radius:50%;display:inline-block;margin-right:4px;border:2px solid #fff;box-shadow:0 0 0 1px #4CAF50}
+.userCard{background:#fff;border-radius:18px;margin:10px;overflow:hidden;border:1px solid #FFECB3}
+.userCard img{width:100%;height:260px;object-fit:cover}
+.bottomNav{position:absolute;bottom:0;left:0;right:0;background:#2E7D32;display:flex;padding:6px 0 8px;z-index:20}
+.bottomNav button{flex:1;background:transparent;border:none;color:rgba(255,255,255,.6);padding:6px;font-size:10px;font-weight:800;display:flex;flex-direction:column;align-items:center}
+.bottomNav button.on{color:#FFEB3B}
+.chatList{display:flex;gap:10px;padding:10px 12px;align-items:center;background:#fff;margin:5px 10px;border-radius:14px;border:1px solid #FFECB3}
+.av{width:48px;height:48px;border-radius:50%;background:#FFF8E1;border:2px solid #FFD54F;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;color:#2E7D32}
+.av img{width:100%;height:100%;object-fit:cover}
+.chatBox{background:#FFF8E1;flex:1;overflow-y:auto;padding:10px 8px}
+.bubble{max-width:76%;padding:9px 13px;border-radius:18px;font-size:14px;margin:4px 0}
+.bubble.me{align-self:flex-end;background:#2E7D32;color:#fff;border-bottom-right-radius:6px;margin-left:auto}
+.bubble.other{align-self:flex-start;background:#fff;color:#222;border:1px solid #FFECB3;border-bottom-left-radius:6px}
+.bubbleWrap{display:flex;flex-direction:column}
+.inputbar{position:absolute;bottom:56px;left:0;right:0;background:#fff;padding:7px 10px;display:flex;gap:6px;align-items:center;border-top:1px solid #FFECB3}
+.wrap{flex:1;background:#FFF8E1;border-radius:28px;display:flex;align-items:center;padding:3px 6px 3px 12px;border:1.5px solid #FFECB3}
+.wrap input{flex:1;background:transparent;border:none;outline:none;padding:7px;font-size:14px}
+.sendBtn{width:42px;height:42px;border-radius:50%;border:none;background:#2E7D32;color:#fff;font-weight:900}
+.editOverlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.editBox{background:#fff;border-radius:20px;padding:16px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto;border:2px solid #FFD54F}
 </style></head><body>
 <div class="app">
-<div class="top"><b>💛 Lagos Love</b><span id="topInfo">Real People Only</span></div>
+<div class="top"><b>💛 Lagos Love</b><span id="topInfo" style="font-size:11px;color:#888">Edit Profile Ready</span></div>
 
 <div id="auth">
-<div style="text-align:center;margin-bottom:10px"><h1 style="font-size:28px;color:#2E7D32">Find Love<br><span style="background:#FFD54F;padding:0 8px;border-radius:8px">For Lagos</span></h1><p style="color:#795548;font-size:12px;margin-top:6px">Lite Yellow • White Top • Green Down • No Robot!</p></div>
-
+<div style="text-align:center;margin-bottom:8px"><h1 style="font-size:26px;color:#2E7D32">Find Love<br><span style="background:#FFD54F;padding:0 8px;border-radius:8px">For Lagos</span></h1><p style="color:#795548;font-size:11px">Lite Yellow • White Top • Green Down • Edit Profile!</p></div>
 <div id="loginBox" class="card">
-<b style="font-size:13px;color:#2E7D32">LOGIN</b>
+<b style="font-size:12px;color:#2E7D32">LOGIN</b>
 <input id="le" placeholder="Email">
 <input id="lp" type="password" placeholder="Password">
 <button class="btn" onclick="login()">LOGIN 💛</button>
-<p style="text-align:center;font-size:12px;margin-top:10px;color:#666">No account? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showSignup()">Sign up</span></p>
+<p style="text-align:center;font-size:12px;margin-top:8px;color:#666">No account? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showSignup()">Sign up</span></p>
 </div>
-
 <div id="signupBox" class="card" style="display:none">
-<b style="font-size:13px;color:#2E7D32">CREATE YOUR REAL ACCOUNT</b>
-<input id="sn" placeholder="Full name - e.g Sunnice">
-<input id="sage" type="number" placeholder="Age - e.g 23">
-<select id="sgender"><option value="">Gender</option><option>Man</option><option>Woman</option></select>
-<select id="sarea"><option>Lekki</option><option>Ikeja</option><option>Yaba</option><option>Surulere</option><option>VI</option><option>Ajah</option><option>Oshodi</option><option>Ikorodu</option><option>Computer Village</option></select>
-<textarea id="sbio" rows="2" placeholder="Bio - e.g I be fine boy from Ikeja..."></textarea>
+<b style="font-size:12px;color:#2E7D32">CREATE ACCOUNT</b>
+<input id="sn" placeholder="Full name">
+<input id="sage" type="number" placeholder="Age">
+<select id="sgender"><option>Man</option><option>Woman</option></select>
+<select id="sarea"><option>Lekki</option><option>Ikeja</option><option>Yaba</option><option>Surulere</option><option>VI</option><option>Ajah</option><option>Oshodi</option></select>
+<textarea id="sbio" rows="2" placeholder="Bio"></textarea>
 <input type="file" id="sfile" accept="image/*">
 <input id="se" placeholder="Email">
 <input id="sp" type="password" placeholder="Password">
-<button class="btn" onclick="signup()">SIGN UP & FIND LOVE 💚</button>
-<p style="text-align:center;font-size:12px;margin-top:10px;color:#666">Already have? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showLogin()">Login</span></p>
+<button class="btn" onclick="signup()">SIGN UP 💚</button>
+<p style="text-align:center;font-size:12px;margin-top:8px;color:#666">Already have? <span style="color:#2E7D32;font-weight:900;text-decoration:underline" onclick="showLogin()">Login</span></p>
 </div>
-<p style="text-align:center;color:#BCAAA4;font-size:10px;margin-top:8px">Anonymous builder - Nobody know na you build am 🕶️</p>
 </div>
 
 <div id="main" style="display:none;flex:1;flex-direction:column;height:100%;position:relative">
 <div id="vDiscover" class="view"><div id="discoverList"></div></div>
 <div id="vChats" class="view" style="display:none"><div id="chatList"></div></div>
-<div id="vChatBox" class="view" style="display:none;flex-direction:column;height:100%"><div style="background:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #FFECB3"><button onclick="backToChats()" style="background:transparent;border:none;font-size:18px">←</button><div class="av" id="chatAv" style="width:36px;height:36px;border-radius:50%;background:#FFF8E1;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden"></div><div><b id="chatName" style="font-size:14px"></b><div style="font-size:10px;color:#4CAF50"><span class="dot"></span>Online now</div></div></div><div class="chatBox" id="ch"></div><div class="inputbar"><button class="iconBtn" onclick="document.getElementById('file').click()">📷</button><div class="wrap"><input id="msg" placeholder="Message..."><button class="iconBtn" style="border:none;background:transparent" onclick="document.getElementById('file').click()">😊</button></div><button class="sendBtn" onclick="sendMsg()">➤</button><input type="file" id="file" accept="image/*" style="display:none" onchange="sendPic(this)"></div></div>
+<div id="vChatBox" class="view" style="display:none;flex-direction:column;height:100%"><div style="background:#fff;padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #FFECB3"><button onclick="backToChats()" style="background:transparent;border:none;font-size:18px">←</button><div class="av" id="chatAv"></div><div><b id="chatName" style="font-size:13px"></b><div style="font-size:10px;color:#4CAF50">● Online</div></div></div><div class="chatBox" id="ch"></div><div class="inputbar"><div class="wrap"><input id="msg" placeholder="Message..."><button onclick="document.getElementById('file').click()" style="background:transparent;border:none">📷</button></div><button class="sendBtn" onclick="sendMsg()">➤</button><input type="file" id="file" accept="image/*" style="display:none" onchange="sendPic(this)"></div></div>
 <div id="vProfile" class="view" style="display:none"><div id="myProfile"></div></div>
-
 <div class="bottomNav">
-<button id="bDiscover" class="on" onclick="tab('discover')"><i>💛</i>DISCOVER</button>
-<button id="bChats" onclick="tab('chats')"><i>💬</i>CHATS</button>
-<button id="bProfile" onclick="tab('profile')"><i>👤</i>PROFILE</button>
+<button id="bDiscover" class="on" onclick="tab('discover')">💛 DISCOVER</button>
+<button id="bChats" onclick="tab('chats')">💬 CHATS</button>
+<button id="bProfile" onclick="tab('profile')">👤 PROFILE</button>
 </div>
 </div>
+
+<div id="editOverlay" class="editOverlay">
+<div class="editBox">
+<h3 style="color:#2E7D32;text-align:center">✏️ Edit Your Profile</h3>
+<p style="font-size:11px;color:#888;text-align:center;margin:4px 0">Change anything later anytime!</p>
+<div style="text-align:center;margin:10px 0"><div id="editPicPreview" class="av" style="width:80px;height:80px;margin:0 auto;font-size:28px"></div><input type="file" id="efile" accept="image/*" style="margin-top:8px" onchange="previewEditPic(this)"></div>
+<input id="en" placeholder="Full name">
+<input id="eage" type="number" placeholder="Age">
+<select id="egender"><option>Man</option><option>Woman</option></select>
+<select id="earea"><option>Lekki</option><option>Ikeja</option><option>Yaba</option><option>Surulere</option><option>VI</option><option>Ajah</option><option>Oshodi</option></select>
+<textarea id="ebio" rows="3" placeholder="Bio"></textarea>
+<input id="eemail" placeholder="Email" disabled style="background:#eee">
+<input id="epass" type="text" placeholder="Password (you fit change am)">
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn" style="flex:1;background:#888" onclick="closeEdit()">CANCEL</button>
+<button class="btn" style="flex:1" onclick="saveEdit()">SAVE CHANGES 💚</button>
+</div>
+</div>
+</div>
+
 </div>
 
 <script>
-let users=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');
-let msgs=JSON.parse(localStorage.getItem('lagos_real_msgs')||'[]');
+// Firebase config - Replace with your own for global sync, or leave as demo for local
+const firebaseConfig = {
+  apiKey: "AIzaSyDemo-Replace",
+  authDomain: "lagos-love-demo.firebaseapp.com",
+  databaseURL: "https://lagos-love-demo-default-rtdb.firebaseio.com",
+  projectId: "lagos-love-demo",
+};
+let useFirebase=false;
+try{if(!firebaseConfig.apiKey.includes("Demo-Replace")){firebase.initializeApp(firebaseConfig);useFirebase=true;}}catch(e){useFirebase=false;}
+
 let cur=JSON.parse(localStorage.getItem('lagos_cur')||'null');
+let users=[],msgs=[],currentChatId=null,newPic=null;
 
 function showSignup(){loginBox.style.display='none';signupBox.style.display='block';}
 function showLogin(){signupBox.style.display='none';loginBox.style.display='block';}
@@ -93,26 +112,30 @@ function showLogin(){signupBox.style.display='none';loginBox.style.display='bloc
 function signup(){
 let name=sn.value.trim(),age=sage.value,gender=sgender.value,area=sarea.value,bio=sbio.value.trim(),email=se.value.trim().toLowerCase(),pass=sp.value.trim();
 if(!name||!email||!pass||!age)return alert('Fill name, age, email, password!');
-if(users.find(u=>u.email===email))return alert('Email don exist! Login');
 let file=document.getElementById('sfile').files[0];
 let finish=(pic)=>{
 let user={id:Date.now().toString(),name:name,age:age,gender:gender,area:area,bio:bio,email:email,pass:pass,pic:pic||'',joined:Date.now()};
-users.push(user);localStorage.setItem('lagos_real_users',JSON.stringify(users));
-cur=user;localStorage.setItem('lagos_cur',JSON.stringify(cur));
-startApp();
+if(useFirebase){firebase.database().ref('users/'+user.id).set(user).then(()=>{cur=user;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();});}
+else{let localUsers=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');if(localUsers.find(u=>u.email===email))return alert('Email exist!');localUsers.push(user);localStorage.setItem('lagos_real_users',JSON.stringify(localUsers));cur=user;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();}
 };
 if(file){let r=new FileReader();r.onload=e=>finish(e.target.result);r.readAsDataURL(file);}else finish('');
 }
 function login(){
 let email=le.value.trim().toLowerCase(),pass=lp.value.trim();
-let u=users.find(x=>x.email===email && x.pass===pass);
-if(!u)return alert('Wrong email or password!');
-cur=u;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();
+if(useFirebase){firebase.database().ref('users').once('value',snap=>{let data=snap.val()||{};let found=Object.values(data).find(u=>u.email===email && u.pass===pass);if(!found)return alert('Wrong email/password!');cur=found;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();});}
+else{let localUsers=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');let u=localUsers.find(x=>x.email===email && x.pass===pass);if(!u)return alert('Wrong!');cur=u;localStorage.setItem('lagos_cur',JSON.stringify(cur));startApp();}
 }
 function startApp(){
 auth.style.display='none';main.style.display='flex';
-topInfo.textContent=cur.name+' • '+cur.area;
+topInfo.textContent=cur.name+' • Can Edit';
+if(useFirebase){
+firebase.database().ref('users').on('value',snap=>{let data=snap.val()||{};users=Object.values(data);let me=users.find(u=>u.id===cur.id);if(me){cur=me;localStorage.setItem('lagos_cur',JSON.stringify(cur));}renderDiscover();renderChatList();renderMyProfile();});
+firebase.database().ref('messages').on('value',snap=>{let data=snap.val()||{};msgs=Object.values(data).sort((a,b)=>a.ts-b.ts);if(currentChatId)renderMessages();renderChatList();});
+}else{
+users=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');
+msgs=JSON.parse(localStorage.getItem('lagos_real_msgs')||'[]');
 renderDiscover();renderChatList();renderMyProfile();
+}
 }
 function tab(t){
 ['discover','chats','chatBox','profile'].forEach(x=>{let el=document.getElementById('v'+x[0].toUpperCase()+x.slice(1));if(el)el.style.display='none';let b=document.getElementById('b'+x[0].toUpperCase()+x.slice(1));if(b)b.classList.remove('on');});
@@ -122,126 +145,99 @@ if(t==='chatBox'){document.getElementById('vChatBox').style.display='flex';docum
 if(t==='profile')document.getElementById('vProfile').style.display='block';
 let btn=document.getElementById('b'+t[0].toUpperCase()+t.slice(1));if(btn)btn.classList.add('on');
 }
-
 function renderDiscover(){
 let others=users.filter(u=>u.id!==cur.id);
-if(others.length===0){discoverList.innerHTML='<div style="text-align:center;padding:40px 20px"><h3 style="color:#2E7D32">No people yet! 😭</h3><p style="font-size:12px;color:#795548;margin-top:8px">Invite friends make dem sign up! Na real people wey sign up go show here - No robot!</p><div style="margin-top:14px;background:#fff;padding:12px;border-radius:14px;border:1px solid #FFECB3"><p style="font-size:11px;color:#888">Share this link:</p><p style="font-size:11px;color:#2E7D32;word-break:break-all">'+location.href+'</p><button class="btn" style="padding:8px;margin-top:8px" onclick="navigator.clipboard.writeText(location.href);alert(\'Link copied! Send for WhatsApp make friends sign up!\')">COPY LINK 🔗</button></div></div>';return;}
-discoverList.innerHTML=others.map(u=>`
-<div class="userCard">
-<img src="${u.pic||'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400'}" onerror="this.src='https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400'">
-<div class="userInfo">
-<h3>${u.name}, ${u.age} <span style="color:#4CAF50;font-size:12px">● Online</span></h3>
-<p>📍 ${u.area} • ${u.gender||''} • Joined now</p>
-<p style="margin-top:6px;color:#444">${u.bio||'No bio yet'}</p>
-<div style="margin-top:8px"><span class="badge">💛 Real</span><span class="badge">📍 ${u.area}</span><span class="badge">✅ Verified by signup</span></div>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="btn-yellow btn" style="flex:1;padding:10px" onclick="startChat('${u.id}')">💬 Message ${u.name.split(' ')[0]}</button>
-<button class="btn" style="flex:0.4;padding:10px" onclick="viewProfile('${u.id}')">👀 View</button>
-</div>
-</div>
-</div>
-`).join('');
+if(others.length===0){discoverList.innerHTML='<div style="text-align:center;padding:30px 16px"><h3 style="color:#2E7D32">Na only you for now! 😭</h3><p style="font-size:12px;color:#795548;margin-top:8px">Share link make real people sign up - dem go show here!</p><div style="margin-top:12px;background:#fff;padding:10px;border-radius:12px;border:1px solid #FFECB3"><p style="font-size:10px;color:#2E7D32;word-break:break-all">'+location.href+'</p><button class="btn" style="padding:8px;margin-top:6px" onclick="navigator.clipboard.writeText(location.href);alert(\'Link copied!\')">COPY LINK 🔗</button></div></div>';return;}
+discoverList.innerHTML=others.map(u=>`<div class="userCard"><img src="${u.pic||'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400'}"><div style="padding:10px 12px"><h3>${u.name}, ${u.age} <span style="color:#4CAF50;font-size:11px">● Online</span></h3><p style="font-size:12px;color:#666">📍 ${u.area} • ${u.gender}</p><p style="font-size:12px;color:#444;margin-top:4px">${u.bio||''}</p><div style="display:flex;gap:6px;margin-top:8px"><button class="btn-yellow btn" style="flex:1;padding:9px;font-size:12px" onclick="startChat('${u.id}')">💬 Message ${u.name.split(' ')[0]}</button></div></div></div>`).join('');
 }
-
-let currentChatId=null;
-function startChat(uid){
-let u=users.find(x=>x.id===uid);if(!u)return;
-currentChatId=uid;
-document.getElementById('chatName').textContent=u.name;
-document.getElementById('chatAv').innerHTML=u.pic?`<img src="${u.pic}" style="width:100%;height:100%;object-fit:cover">`:u.name.charAt(0);
-tab('chatBox');renderMessages();
-}
-function viewProfile(uid){startChat(uid);}
-
+function startChat(uid){let u=users.find(x=>x.id===uid);if(!u)return;currentChatId=uid;document.getElementById('chatName').textContent=u.name;document.getElementById('chatAv').innerHTML=u.pic?`<img src="${u.pic}">`:u.name.charAt(0);tab('chatBox');renderMessages();}
+function backToChats(){tab('chats');renderChatList();}
 function renderChatList(){
 let others=users.filter(u=>u.id!==cur.id);
-let lastMsgs={};
-msgs.forEach(m=>{
-if(m.from===cur.id || m.to===cur.id){
-let otherId=m.from===cur.id?m.to:m.from;
-lastMsgs[otherId]=m;
+let lastMsgs={};msgs.forEach(m=>{if(m.from===cur.id||m.to===cur.id){let other=m.from===cur.id?m.to:m.from;lastMsgs[other]=m;}});
+if(others.length===0){chatList.innerHTML='<p style="text-align:center;color:#999;padding:20px;font-size:12px">No chats yet.</p>';return;}
+chatList.innerHTML=others.map(u=>{let last=lastMsgs[u.id];return `<div class="chatList" onclick="startChat('${u.id}')"><div class="av">${u.pic?`<img src="${u.pic}">`:u.name.charAt(0)}</div><div style="flex:1"><b style="font-size:13px">${u.name}</b><div style="font-size:11px;color:#888">${last? (last.text||'📷 Photo') : 'Say Hi!'} • ${last? last.time : ''}</div></div></div>`;}).join('');
 }
-});
-if(others.length===0){chatList.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:12px">No chats yet. Go Discover and message someone real!</p>';return;}
-chatList.innerHTML=others.map(u=>{
-let last=lastMsgs[u.id];
-return `<div class="chatList" onclick="startChat('${u.id}')">
-<div class="av">${u.pic?`<img src="${u.pic}">`:u.name.charAt(0)}</div>
-<div style="flex:1"><b style="font-size:14px">${u.name}</b><div style="font-size:12px;color:#888">${last? (last.text||'📷 Photo') : 'Say Hi! Start chat - No robot'} • ${last? last.time : ''}</div></div>
-<div style="width:8px;height:8px;background:#4CAF50;border-radius:50%"></div>
-</div>`;
-}).join('');
-}
-function backToChats(){tab('chats');renderChatList();}
-
 function renderMessages(){
 if(!currentChatId)return;
 let conv=msgs.filter(m=>(m.from===cur.id && m.to===currentChatId) || (m.from===currentChatId && m.to===cur.id));
-let h='';
-conv.forEach(m=>{
-let me=m.from===cur.id;
-let pic=m.pic?`<img src="${m.pic}">`:'';
-h+=`<div class="bubbleWrap"><div class="bubble ${me?'me':'other'}">${m.text?m.text:''}${pic}<div class="time">${m.time||''} ${me?'✓✓':''}</div></div></div>`;
-});
-document.getElementById('ch').innerHTML=h||'<p style="text-align:center;color:#BCAAA4;font-size:11px;margin-top:20px">No messages yet. Say Hi! 💛<br>Real chat - No robot</p>';
+let h='';conv.forEach(m=>{let me=m.from===cur.id;let pic=m.pic?`<img src="${m.pic}" style="width:100%;border-radius:10px;margin-top:4px;max-height:180px;object-fit:cover">`:'';h+=`<div class="bubbleWrap"><div class="bubble ${me?'me':'other'}">${m.text||''}${pic}<div style="font-size:9px;opacity:.6;text-align:right;margin-top:2px">${m.time||''} ${me?'✓✓':''}</div></div></div>`;});
+document.getElementById('ch').innerHTML=h||'<p style="text-align:center;color:#BCAAA4;font-size:11px;margin-top:20px">No messages yet. Say Hi! 💛</p>';
 document.getElementById('ch').scrollTop=99999;
 }
 function sendMsg(){
-let t=msg.value.trim();if(!t||!currentChatId)return;
-msg.value='';
-let m={from:cur.id,to:currentChatId,text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now()};
-msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));
-renderMessages();renderChatList();
+let t=msg.value.trim();if(!t||!currentChatId)return;msg.value='';
+let m={from:cur.id,to:currentChatId,text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now(),id:Date.now().toString()};
+if(useFirebase){firebase.database().ref('messages/'+m.id).set(m);}else{msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));renderMessages();renderChatList();}
 }
 function sendPic(i){
-let f=i.files[0];if(!f||!currentChatId)return;
-let r=new FileReader();r.onload=e=>{
-let m={from:cur.id,to:currentChatId,text:'',pic:e.target.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now()};
-msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));renderMessages();renderChatList();
+let f=i.files[0];if(!f||!currentChatId)return;let r=new FileReader();r.onload=e=>{
+let m={from:cur.id,to:currentChatId,text:'',pic:e.target.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),ts:Date.now(),id:Date.now().toString()};
+if(useFirebase){firebase.database().ref('messages/'+m.id).set(m);}else{msgs.push(m);localStorage.setItem('lagos_real_msgs',JSON.stringify(msgs));renderMessages();}
 };r.readAsDataURL(f);
 }
 function renderMyProfile(){
+if(!cur)return;
 document.getElementById('myProfile').innerHTML=`
-<div class="profileHead">
-<div class="profilePic">${cur.pic?`<img src="${cur.pic}">`:cur.name.charAt(0)}</div>
-<h2 style="margin-top:10px;color:#222">${cur.name}, ${cur.age}</h2>
-<p style="color:#2E7D32;font-size:12px">📍 ${cur.area} • ${cur.gender} • <span style="color:#4CAF50">● Online</span></p>
-<p style="font-size:12px;color:#666;margin-top:6px">${cur.bio||''}</p>
-<p style="font-size:11px;color:#BCAAA4;margin-top:6px">${cur.email}</p>
+<div style="background:#fff;padding:18px;text-align:center;border-bottom:1px solid #FFECB3">
+<div class="av" style="width:86px;height:86px;margin:0 auto;font-size:32px;border:3px solid #FFD54F">${cur.pic?`<img src="${cur.pic}">`:cur.name.charAt(0)}</div>
+<h2 style="margin-top:8px;color:#222">${cur.name}, ${cur.age}</h2>
+<p style="color:#2E7D32;font-size:12px">📍 ${cur.area} • ${cur.gender} • Real</p>
+<p style="font-size:12px;color:#666;margin-top:4px">${cur.bio||''}</p>
+<p style="font-size:11px;color:#999;margin-top:4px">${cur.email}</p>
+<button class="btn-yellow btn" style="margin-top:10px;padding:10px" onclick="openEdit()">✏️ EDIT PROFILE - Change Anything!</button>
 </div>
-<div style="padding:14px">
-<div class="card">
-<b style="font-size:12px;color:#2E7D32">EDIT PROFILE</b>
-<input id="en" value="${cur.name}" placeholder="Name">
-<input id="eage" type="number" value="${cur.age}" placeholder="Age">
-<select id="earea"><option ${cur.area==='Lekki'?'selected':''}>Lekki</option><option ${cur.area==='Ikeja'?'selected':''}>Ikeja</option><option ${cur.area==='Yaba'?'selected':''}>Yaba</option><option ${cur.area==='Surulere'?'selected':''}>Surulere</option><option ${cur.area==='VI'?'selected':''}>VI</option><option ${cur.area==='Ajah'?'selected':''}>Ajah</option><option ${cur.area==='Oshodi'?'selected':''}>Oshodi</option></select>
-<textarea id="ebio" rows="2" placeholder="Bio">${cur.bio||''}</textarea>
-<input type="file" id="efile" accept="image/*" onchange="updatePic(this)">
-<button class="btn" onclick="saveProfile()">SAVE PROFILE 💚</button>
-</div>
-<div class="card" style="border:2px dashed #FFD54F;text-align:center">
-<b style="color:#2E7D32;font-size:12px">ADD MORE PEOPLE - REAL ONLY</b>
-<p style="font-size:11px;color:#795548;margin:6px 0">Share link make friends sign up. Na only people wey sign up go show for Discover!</p>
-<p style="font-size:10px;color:#2E7D32;word-break:break-all;background:#FFF8E1;padding:6px;border-radius:8px">${location.href}</p>
-<button class="btn-yellow btn" onclick="navigator.clipboard.writeText(location.href);alert('Link copied! Send for WhatsApp!')">COPY LINK 🔗</button>
-<p style="font-size:10px;color:#999;margin-top:8px">Total Real Users: ${users.length} • No Robot 🚫🤖</p>
+<div style="padding:12px">
+<div class="card" style="text-align:center;border:2px dashed #FFD54F">
+<b style="color:#2E7D32;font-size:12px">INVITE REAL PEOPLE</b>
+<p style="font-size:10px;color:#2E7D32;word-break:break-all;background:#FFF8E1;padding:6px;border-radius:8px;margin-top:6px">${location.href}</p>
+<button class="btn-yellow btn" onclick="navigator.clipboard.writeText(location.href);alert('Link copied!')">COPY LINK 🔗</button>
+<p style="font-size:10px;color:#999;margin-top:6px">Total Real Users: ${users.length} • No Robot</p>
 </div>
 <button class="btn" style="background:#fff;color:#C62828;border:1.5px solid #FFCDD2" onclick="logout()">LOGOUT</button>
 </div>
 `;
 }
-function updatePic(i){let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{cur.pic=e.target.result;document.querySelector('.profilePic').innerHTML=`<img src="${cur.pic}">`;};r.readAsDataURL(f);}
-function saveProfile(){
-cur.name=document.getElementById('en').value.trim()||cur.name;
-cur.age=document.getElementById('eage').value||cur.age;
-cur.area=document.getElementById('earea').value||cur.area;
-cur.bio=document.getElementById('ebio').value.trim()||cur.bio;
-let idx=users.findIndex(u=>u.id===cur.id);if(idx>=0)users[idx]=cur;
-localStorage.setItem('lagos_real_users',JSON.stringify(users));
-localStorage.setItem('lagos_cur',JSON.stringify(cur));
-alert('Profile saved! 💚');renderMyProfile();renderDiscover();topInfo.textContent=cur.name+' • '+cur.area;
+function openEdit(){
+document.getElementById('editOverlay').style.display='flex';
+document.getElementById('en').value=cur.name;
+document.getElementById('eage').value=cur.age;
+document.getElementById('egender').value=cur.gender;
+document.getElementById('earea').value=cur.area;
+document.getElementById('ebio').value=cur.bio||'';
+document.getElementById('eemail').value=cur.email;
+document.getElementById('epass').value=cur.pass;
+document.getElementById('editPicPreview').innerHTML=cur.pic?`<img src="${cur.pic}">`:cur.name.charAt(0);
+newPic=cur.pic;
+}
+function closeEdit(){document.getElementById('editOverlay').style.display='none';newPic=null;}
+function previewEditPic(input){
+let f=input.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{newPic=e.target.result;document.getElementById('editPicPreview').innerHTML=`<img src="${newPic}">`;};r.readAsDataURL(f);
+}
+function saveEdit(){
+let name=document.getElementById('en').value.trim()||cur.name;
+let age=document.getElementById('eage').value||cur.age;
+let gender=document.getElementById('egender').value||cur.gender;
+let area=document.getElementById('earea').value||cur.area;
+let bio=document.getElementById('ebio').value.trim()||cur.bio;
+let pass=document.getElementById('epass').value.trim()||cur.pass;
+let updated={...cur,name:name,age:age,gender:gender,area:area,bio:bio,pass:pass,pic:newPic||cur.pic};
+if(useFirebase){
+firebase.database().ref('users/'+cur.id).set(updated).then(()=>{
+cur=updated;localStorage.setItem('lagos_cur',JSON.stringify(cur));
+closeEdit();alert('✅ Profile updated globally! Everybody go see your new profile!');
+renderMyProfile();renderDiscover();
+});
+}else{
+let localUsers=JSON.parse(localStorage.getItem('lagos_real_users')||'[]');
+let idx=localUsers.findIndex(u=>u.id===cur.id);
+if(idx>=0){localUsers[idx]=updated;localStorage.setItem('lagos_real_users',JSON.stringify(localUsers));}
+cur=updated;localStorage.setItem('lagos_cur',JSON.stringify(cur));
+closeEdit();alert('✅ Profile updated! Saved for your phone!');
+renderMyProfile();renderDiscover();topInfo.textContent=cur.name+' • Edited';
+}
 }
 function logout(){if(confirm('Logout?')){localStorage.removeItem('lagos_cur');location.reload();}}
 document.getElementById('msg')?.addEventListener('keypress',e=>{if(e.key==='Enter')sendMsg()});
-if(cur){auth.style.display='none';main.style.display='flex';topInfo.textContent=cur.name+' • '+cur.area;renderDiscover();renderChatList();renderMyProfile();}
+if(cur){auth.style.display='none';main.style.display='flex';startApp();}
 </script></body></html>
